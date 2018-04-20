@@ -8,16 +8,13 @@ import logger from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import App from './components/App';
 
-// TODO: apply Middlewares thunkMiddleware and logger (thunks handle async stuff
-// logger handles showing you how to get  to the next state
-// create a store with these middlewares and the mainReducer
 let createMiddleware = applyMiddleware(thunkMiddleware, logger)(createStore)
 let store = createMiddleware(mainReducer)
 
 render(
   <Provider store={store}>
     <Router>
-      <App />
+      <App/>
     </Router>
   </Provider>,
   document.getElementById('root')

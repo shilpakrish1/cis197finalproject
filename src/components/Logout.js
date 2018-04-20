@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { logOut } from '../actions/auth';
+import { logOut } from '../actions/authentication';
 
 class Logout extends React.Component {
   componentDidMount() {
     let { dispatch } = this.props;
     dispatch(logOut());
-    this.props.history.push('/signx');
+    this.props.history.push('/signin');
   }
 
   render() {
     return (
       <div>
-        Logging Out
+        You are logging out and will no longer be able to make posts.
       </div>
     );
   }
