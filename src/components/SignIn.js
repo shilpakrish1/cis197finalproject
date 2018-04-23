@@ -33,7 +33,6 @@ class SignIn extends Component {
   }
 
   render() {
-    print('rendering')
     let { isAuthenticated, isFetching, messages } = this.props;
     return (
       <div className='container'>
@@ -132,6 +131,6 @@ class SignIn extends Component {
     }
   }
 
-  const mapStateToProps = state => state.authReducer;
+const mapStateToProps = state => state.authReducer;
 
 export default withRouter(connect(mapStateToProps)(SignIn));

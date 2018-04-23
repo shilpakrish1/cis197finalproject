@@ -8,6 +8,7 @@ import Logout from './Logout';
 import Navigation from './Navigation'
 import Alerts from './Alerts'
 import GoogleMap from './GoogleMap.js'
+import NewsFeed from './Feed.js'
 
 
 class App extends Component {
@@ -25,7 +26,7 @@ class App extends Component {
             <Switch>
           //    <Route path ='/signin' component={SignIn}/>
             //  <Route path ='/logout' component={Logout}/>
-              <Route component={GoogleMap}/>
+              <Route component={NewsFeed}/>
             </Switch>
           </div>
         </div>

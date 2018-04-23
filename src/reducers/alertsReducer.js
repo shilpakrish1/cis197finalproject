@@ -1,3 +1,4 @@
+//Makes the alerts reducer
 const alertsReducer = (state={alerts: []}, action) => {
   if (action.type == 'DISMISS') {
     var obj = state.alerts.slice();
