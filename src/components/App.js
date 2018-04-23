@@ -7,6 +7,8 @@ import SignIn from './SignIn';
 import Logout from './Logout';
 import Navigation from './Navigation'
 import Alerts from './Alerts'
+import GoogleMap from './GoogleMap.js'
+
 
 class App extends Component {
   constructor(props) {
@@ -21,9 +23,9 @@ class App extends Component {
             <Navigation/>
             <Alerts/>
             <Switch>
-              <Route path ='/signin' component={SignIn}/>
-              <Route path ='/logout' component={Logout}/>
-              <Route component = {SignIn}/>
+          //    <Route path ='/signin' component={SignIn}/>
+            //  <Route path ='/logout' component={Logout}/>
+              <Route component={GoogleMap}/>
             </Switch>
           </div>
         </div>

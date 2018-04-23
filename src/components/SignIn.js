@@ -33,6 +33,7 @@ class SignIn extends Component {
   }
 
   render() {
+    print('rendering')
     let { isAuthenticated, isFetching, messages } = this.props;
     return (
       <div className='container'>

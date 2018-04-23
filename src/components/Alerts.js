@@ -7,7 +7,7 @@ class Alerts extends Component {
   }
 
   render() {
-    console.log('alerts are ' + JSON.stringify(this.props));
+    console.log('alerts props are' + JSON.stringify(this.props));
     let alerts = this.props.alerts.map((i, index) => {
       let name = 'alert alert-' + (i.alertType == 'error' ? 'warning' : 'info');
       return (<div className = {name}
