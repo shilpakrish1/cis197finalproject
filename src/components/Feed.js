@@ -11,7 +11,7 @@ class NewsFeed extends Component {
   render() {
    return(
      <div className ='container'>
-     <h2> Newsfeed </h2>
+     <h4 col = 'bg-light'> Food Trucks </h4>
      <div className ='row'>
       <div className='col-md-6'>
         <FoodTruckList />

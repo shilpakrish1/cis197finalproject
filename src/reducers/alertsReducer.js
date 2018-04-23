@@ -12,7 +12,7 @@ const alertsReducer = (state={alerts: []}, action) => {
   }
   else if (action.message) {
     var obj = state.alerts.slice();
-    obj.alerts.push({alertType: 'info', message: action.message});
+    obj.push({alertType: 'info', message: action.message});
     return Object.assign({}, state, { alerts: obj })
   }
   return state;

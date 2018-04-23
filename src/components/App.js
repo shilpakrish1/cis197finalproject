@@ -9,13 +9,12 @@ import Navigation from './Navigation'
 import Alerts from './Alerts'
 import GoogleMap from './GoogleMap.js'
 import NewsFeed from './Feed.js'
-
+import CreatePost from './CreatePost.js'
 
 class App extends Component {
   constructor(props) {
     super(props);
   }
-
   render() {
     return (
       <Router>
@@ -24,8 +23,9 @@ class App extends Component {
             <Navigation/>
             <Alerts/>
             <Switch>
-          //    <Route path ='/signin' component={SignIn}/>
-            //  <Route path ='/logout' component={Logout}/>
+              <Route path ='/signin' component={SignIn}/>
+              <Route path ='/logout' component={Logout}/>
+              <Route path = '/createpost/:id?' component = {CreatePost} />
               <Route component={NewsFeed}/>
             </Switch>
           </div>

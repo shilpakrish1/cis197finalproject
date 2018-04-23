@@ -13,7 +13,7 @@ class Alerts extends Component {
       return (<div className = {name}
                    onClick = {() => this.props.dismiss(index)}
                    key = {index} index = {index} >
-                   {i.message + '. '}
+                   {i.message + ' '}
                    Click to dismiss.
               </div>);
     });

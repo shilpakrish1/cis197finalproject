@@ -20,7 +20,7 @@ export class GoogleMapContainer extends Component {
 			 });
       return(
           <Map google={this.props.google}
-              style={{width: '100%', height: '100%', position: 'absolute'}}
+              style={{width: '100%', height: '40%', position: 'absolute'}}
               className={'map'}
               zoom={10}>
               {markers}

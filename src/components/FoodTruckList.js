@@ -25,8 +25,8 @@ class FoodTruckList extends Component {
   // clear the interval (the one running every 2500 ms
   // ie stop  the refreshing)
   componentWillUnmount() {
-    this.setState({'timeout': null});
-    clearInterval(this.state.timeout)
+  //  this.setState({'timeout': null});
+    //clearInterval(this.state.timeout)
   }
 
   // TODO: render out your  tweets (use the Tweet component with
@@ -42,8 +42,8 @@ class FoodTruckList extends Component {
     console.log(this.props);
     this.props.ids.push(1);
     this.props.ids.push(2);
-    let trucks = this.props.ids.map((i, truck) => {
-      return <FoodTruck key={i} id={i}/>
+    let trucks = this.props.ids.map((i, id) => {
+      return <FoodTruck key={id} id={i}/>
     });
     return (
       <div>

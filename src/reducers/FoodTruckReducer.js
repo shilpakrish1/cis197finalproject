@@ -15,12 +15,16 @@ const FoodTruckReducer = (state={}, action) => {
                foodTruckName: 'Magic Carpet',
                foodPic: 'https://cbsphilly.files.wordpress.com/2011/03/magiccarpet.jpg',
                content: 'yum',
-               timesOpen: '9-12'}
+               menu: ['Tofu Meatballs', 'Curry Tofu'],
+               openTime: '9 AM',
+               closeTime: '3 PM',}
       obj[2] = {foodTruckId: 1,
                 foodTruckName: 'Magic Carpet',
                 foodPic: 'https://cbsphilly.files.wordpress.com/2011/03/magiccarpet.jpg',
                 content: 'yum',
-                timesOpen: '9-12'}
+                menu: ['Tofu Meatballs', 'Curry Tofu'],
+                openTime: '9 AM',
+                closeTime: '8 PM'}
       return Object.assign({}, state, obj);
    }
 }

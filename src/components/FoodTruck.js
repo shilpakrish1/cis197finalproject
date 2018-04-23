@@ -1,26 +1,63 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+var Select = require('react-select');
 
 class FoodTruck extends Component {
   constructor(props) {
     super(props);
+    let { dispatch } = this.props
+    console.log('props are' + JSON.stringify(this.props));
   }
 
-  componentDidMount(){
+  componentDidMount() {
+    //Loads the tweets
+    setInterval( () => {
+       this.setState({
+         time : new Date().toLocaleString('en-US', { hour: 'numeric', hour12: true }),
+       })
+     },1000)
   }
-
-
 
   render() {
-    console.log('my props are ' + JSON.stringify(this.props));
-    let { foodTruckId, foodTruckName, foodPic, content, timesOpen } = this.props;
+    let { foodTruckId, foodTruckName, foodPic, content, menu, openTime, closeTime } = this.props;
+    let boxes = menu.map((i, idx) => {
+      return (
+      <label>
+      <input id='checkbox' type='checkbox' />
+      {i}
+      </label>);
+    });
+    let updatedCol = 'white'
+    if (this.state) {
+      if (this.state.time) {
+        var currTimeSplit = this.state.time.split(' ');
+        var openTimeSplit = openTime.toString().split(' ');
+        var closeTimeSplit = closeTime.toString().split(' ');
+        var currTime = parseInt(currTimeSplit[0]);
+        var openTime1 = parseInt(openTimeSplit[0]);
+        var closeTime1 = parseInt(closeTimeSplit[0]);
+        if (currTimeSplit[1] == 'PM' & currTimeSplit[0] != 12) {
+          currTime += 12
+        }
+        if (openTimeSplit[1] == 'PM') {
+          openTime1 += 12
+        }
+        if (closeTimeSplit[1] == 'PM') {
+          closeTime1 += 12
+        }
+        if (openTime1 < currTime & currTime < closeTime1) {
+          updatedCol = 'lightgreen'
+        }
+      }
+    }
     let cardStyles = {
       marginBottom: '40px',
       padding: '10px',
+      backgroundColor : updatedCol,
     };
     let favoriteStyles = {
-      color: 'BDFF00',
+      color: updatedCol,
     };
     let imgStyles = {
       borderRadius: '50%',
@@ -28,10 +65,11 @@ class FoodTruck extends Component {
       height: '50px',
       marginRight: '10px',
     };
+    var options = [];
     let image = foodPic ? foodPic : 'https://cbsphilly.files.wordpress.com/2011/03/magiccarpet.jpg';
     return (
       <div className='card' style={cardStyles}>
-        <h2> { foodTruckName } </h2>
+        <h5> { foodTruckName } </h5>
         <h5 className='card-title'>
           <img src={image} style={imgStyles} />
         </h5>
@@ -39,13 +77,36 @@ class FoodTruck extends Component {
           { content }
         </p>
         <p>
-          { timesOpen }
+          <i> Open Time: {openTime} </i>
         </p>
+        <p>
+          <i> Close Time: {closeTime} </i>
+        </p>
+        <h6> Order From Menu: </h6>
+        {boxes}
+        <form>
+          <label>
+            Write-in order:
+            <input type='text' name='name'/>
+          </label>
+          <input type='submit' value='Submit' />
+        </form>
+        <form>
+        <button type ='button' width='10px' height='10px' className="btn btn-info btn-sm"
+          key = {1}
+          onClick={() =>  {
+                //  console.log('clicking');
+                  this.props.history.push('/createpost/' + foodTruckId)}}
+          >
+          Edit Post
+        </button>
+        </form>
       </div>
     );
   }
 }
 
+const FoodTruckWithRouter = withRouter(FoodTruck)
 
 const mapStateToProps = (state, ownProps) => {
     console.log(state);
@@ -54,4 +115,4 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(
   mapStateToProps,
-)(FoodTruck);
+)(FoodTruckWithRouter);

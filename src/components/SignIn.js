@@ -93,7 +93,7 @@ class SignIn extends Component {
           </div>
           <div className='col-md-6'>
           <p className ="lead">
-            Please login to post:
+            Login to be able to post:
           </p>
             <form onSubmit={this.loginUser.bind(this)}>
               <div className='form-group'>
