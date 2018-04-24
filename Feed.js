@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import FoodTruckList from './FoodTruckList';
 import { connect } from 'react-redux';
-import { loadTrucks } from '../actions/truckActions';
 
 class NewsFeed extends Component {
   constructor(props) {
