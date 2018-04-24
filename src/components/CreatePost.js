@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { addFoodTruck } from '../actions/postActions';
+
 
 class EditProfile extends Component {
   constructor(props) {
@@ -18,7 +20,7 @@ class EditProfile extends Component {
       openTime: this.refs.opentime.value,
       closeTime: this.refs.closetime.value
     };
-//    this.props.updateProfile(data);
+    this.props.addFoodTruck(data);
   }
 
   render() {
@@ -68,7 +70,8 @@ class EditProfile extends Component {
           </div>
           <div className="form-group">
             <label>
-              Open Time:
+              Open Time
+              <i> Please write in following format: 9 AM </i>
             </label>
             <input
               className="form-control"
@@ -79,6 +82,7 @@ class EditProfile extends Component {
           <div className="form-group">
             <label>
               Close Time:
+              <i> Please write in the following format: 5 PM </i>
             </label>
             <input
               className="form-control"
@@ -101,11 +105,8 @@ class EditProfile extends Component {
 
 
 const mapDispatchToProps = dispatch => ({
-  updateProfile: (data) => dispatch(updateProfile(data))
+  addFoodTruck: (data) => dispatch(addFoodTruck(data))
 });
 
-  // set up a call to the updateProfile async action creator
-  // ie just do the regular mapDispatchToProps type of
-  // pattern for dispatching updateProfile
 
 export default connect(null, mapDispatchToProps)(EditProfile);

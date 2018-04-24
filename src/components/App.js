@@ -10,6 +10,7 @@ import Alerts from './Alerts'
 import GoogleMap from './GoogleMap.js'
 import NewsFeed from './Feed.js'
 import CreatePost from './CreatePost.js'
+import Authentication from './Authentication.js'
 
 class App extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class App extends Component {
             <Switch>
               <Route path ='/signin' component={SignIn}/>
               <Route path ='/logout' component={Logout}/>
-              <Route path = '/createpost/:id?' component = {CreatePost} />
+              <Route path = '/createpost/:id?' component = {Authentication(CreatePost)} />
               <Route component={NewsFeed}/>
             </Switch>
           </div>

@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 //Creates a new FoodTruckSchema
 const FoodTruckSchema = new Schema({
   foodTruckId: {type: Schema.ObjectId, required: true},
-  foodTruckName: {type: String, required: true}
+  foodTruckName: {type: String, required: true},
   foodPic: {type: String},
   content: {type: String, required: true},
   menu: [{type: String}],
@@ -13,7 +13,7 @@ const FoodTruckSchema = new Schema({
 });
 
 //Creates a new food truck tweet
-FoodTruckSchema.statics.createTweet = function (foodTruckId, foodTruckName, foodPic, content, menu, openTime, closeTime) {
+FoodTruckSchema.statics.createTruck = function (foodTruckId, foodTruckName, foodPic, content, menu, openTime, closeTime) {
   var newTruck = new this({
     foodTruckId: foodTruckId,
     foodTruckName: foodTruckName,
@@ -28,8 +28,9 @@ FoodTruckSchema.statics.createTweet = function (foodTruckId, foodTruckName, food
   });
 };
 
-FoodTruckSchema.getAllTrucks() {
+FoodTruckSchema.statics.getAllTrucks = function () {
+  console.log('returning trucks');
   return this.find();
 }
 
-module.exports = mongoose.model('Tweet', FoodTruckSchema);
+module.exports = mongoose.model('FoodTruck', FoodTruckSchema);

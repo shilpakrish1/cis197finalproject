@@ -12,35 +12,32 @@ let userSchema = new Schema({
 
 //Adds a user
 userSchema.statics.addUser = function (username, name, password, email) {
-  return bcrypt.hash(password).then(function (hash) {
-    var newUser = new this({
-      username: username,
-      name: name,
-      password: hash,
-      email: email
-    })
+  console.log('adduing user');
+  var newUser = new this({
+    username: username,
+    name: name,
+    password: 'password',
+    email: email
+  });
+  return bcrypt.hash(password, 10).then((hash) => {
+    newUser.password = hash;
     return newUser.save();
-  }
+  });
 }
 
 //Checks the password
-userSchema.statics.check = function (username, password) {
-  return this.findOne({username: username}).then((user) => {
+userSchema.statics.check = function (user, password) {
+  console.log('finding user with a username');
+  return this.findOne({username: user.username}).then((user) => {
     if (user == null) {
+      console.log('found no user');
       throw new Error('No User');
     }
-    return bcrypt.compare(password, this.password);
-  });
-};
-
-
-//Updates a user profile
-userSchema.statics.updateUserProfile = function (username, password, name, email) {
-  return this.findOne({_id: id}).then(function (user) {
-    user.username = username;
-    user.password = password;
-    user.name = name;
-    return user.save();
+    console.log('comparing user');
+    return bcrypt.compare(password, user.password);
+  }).catch((err) => {
+      console.log('error is ' + err);
+      return err;
   });
 };
 

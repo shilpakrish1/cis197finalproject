@@ -10,11 +10,17 @@ class Alerts extends Component {
 //    console.log('alerts props are' + JSON.stringify(this.props));
     let alerts = this.props.alerts.map((i, index) => {
       let name = 'alert alert-' + (i.alertType == 'error' ? 'warning' : 'info');
+      var message = ''
+      if (i.message) {
+        message = i.message;
+      }
+      else {
+        message = i.error;
+      }
       return (<div className = {name}
                    onClick = {() => this.props.dismiss(index)}
                    key = {index} index = {index} >
-                   {i.message + ' '}
-                   Click to dismiss.
+                   {message + ' '}
               </div>);
     });
     return (

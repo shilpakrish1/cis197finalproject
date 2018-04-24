@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { loginUser, registerUser } from '../actions/authentication';
+import { loginUser, loggedIn, registerUser } from '../actions/authActions';
 
 class SignIn extends Component {
   constructor(props) {
@@ -9,27 +9,33 @@ class SignIn extends Component {
   }
 
   componentDidMount() {
-    //TODO
+    if (this.props.isAuthenticated) {
+      this.props.loggedIn();
+      this.props.history.push('/home');
+    }
   }
 
   componentDidUpdate() {
-    //TODO
+    if (this.props.isAuthenticated) {
+      this.props.loggedIn();
+      this.props.history.push('/home');
+    }
   }
 
   registerUser(e) {
     e.preventDefault();
     let { dispatch } = this.props;
-    password = this.refs.passwordregister.value
-    username = this.refs.userregister.value
-    name = this.refs.name.value
-    email = this.refs.email.value
-    dispatch(registerUser({username, password, name, email}));
+    var password = this.refs.passwordregister.value
+    var username = this.refs.usernameregister.value
+    var name = this.refs.name.value
+    var email = this.refs.email.value
+    this.props.registerUser({username, password, name, email});
   }
 
   loginUser(e) {
     e.preventDefault();
     let { dispatch } = this.props;
-    dispatch(loginUser({ username: this.refs.username.value, password: this.refs.password.value }));
+    this.props.loginUser({username: this.refs.username.value, password: this.refs.password.value});
   }
 
   render() {
@@ -49,7 +55,7 @@ class SignIn extends Component {
                 <input
                   className='form-control'
                   type='text'
-                  ref='username-register'
+                  ref='usernameregister'
                 />
               </div>
               <div className='form-group'>
@@ -58,8 +64,8 @@ class SignIn extends Component {
                 </label>
                 <input
                   className='form-control'
-                  type='text'
-                  ref='password'
+                  type='password'
+                  ref='passwordregister'
                   />
               </div>
               <div className='form-group'>
@@ -131,6 +137,13 @@ class SignIn extends Component {
     }
   }
 
+const mapDispatchToProps = dispatch => ({
+  loggedIn: () => dispatch(loggedIn()),
+  registerUser: (item) => dispatch(registerUser(item)),
+  loginUser: (item) => dispatch(loginUser(item))
+})
+
+
 const mapStateToProps = state => state.authReducer;
 
-export default withRouter(connect(mapStateToProps)(SignIn));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignIn));

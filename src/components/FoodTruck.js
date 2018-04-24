@@ -7,11 +7,9 @@ class FoodTruck extends Component {
   constructor(props) {
     super(props);
     let { dispatch } = this.props
-    console.log('props are' + JSON.stringify(this.props));
   }
 
   componentDidMount() {
-    //Loads the tweets
     setInterval( () => {
        this.setState({
          time : new Date().toLocaleString('en-US', { hour: 'numeric', hour12: true }),
@@ -94,9 +92,7 @@ class FoodTruck extends Component {
         <form>
         <button type ='button' width='10px' height='10px' className="btn btn-info btn-sm"
           key = {1}
-          onClick={() =>  {
-                //  console.log('clicking');
-                  this.props.history.push('/createpost/' + foodTruckId)}}
+          onClick={() =>  {this.props.history.push('/createpost/' + foodTruckId)}}
           >
           Edit Post
         </button>
@@ -109,9 +105,8 @@ class FoodTruck extends Component {
 const FoodTruckWithRouter = withRouter(FoodTruck)
 
 const mapStateToProps = (state, ownProps) => {
-    console.log(state);
     return state.FoodTruckReducer[ownProps.id];
-  }
+}
 
 export default connect(
   mapStateToProps,

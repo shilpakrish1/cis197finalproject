@@ -9,7 +9,6 @@ export class GoogleMapContainer extends Component {
       this.position = null
     }
     render() {
-      console.log('rendering')
       this.props.markers.push({lat: 37.759703, lng: -122.428093, name: 'San Francisco', contentString: 'Fresh malaysian cuisine, cheap'});
       let markers = this.props.markers.map((i, index) => {
         return (<Marker key={index}

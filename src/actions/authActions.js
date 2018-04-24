@@ -3,12 +3,13 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const REGISTER_FAILED = 'REGISTER_FAILED'
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
+export const LOGIN_ALREADY = 'LOGIN_ALREADY'
 
 export function errorLoggingIn(error) {
   return {
     type: LOGIN_FAILED,
     error: error,
-    message: 'Login failed. Please try again.'
+    message: 'Username or password incorrect. Please try again.'
   }
 }
 
@@ -16,15 +17,22 @@ export function successLoggingIn(token) {
   return {
     type: LOGIN_SUCCESS,
     token: token,
-    alert: 'You are logged in.'
+    message: 'You are logged in.'
+  }
+}
+
+export function loggedIn() {
+  return {
+    type: LOGIN_ALREADY,
+    message: 'You have already logged in.'
   }
 }
 
 export function errorRegistering(message) {
   return {
     type: REGISTER_FAILED,
-    error: error,
-    message: 'Registration failed, please try again.'
+    error: message,
+    message: 'Username already taken, please try again.'
   }
 }
 
@@ -47,26 +55,32 @@ export function logOut() {
 }
 
 export function loginUser(info) {
-  return dispatch => fetch('/account/signin', {method: 'POST', headers: {'Content-Type' : 'application/json'}, body: JSON.stringify(info)})
+  console.log('here with info ' + info);
+  return dispatch => fetch('/signin', {method: 'POST', headers: {'Content-Type' : 'application/json'}, body: JSON.stringify(info)})
     .then(response => response.json())
     .then((res) => {
+      console.log('received response')
+      console.log('res is ' + JSON.stringify(res));
       if (res.success) {
+        console.log('this was a successful login');
         localStorage.setItem('token', res.token)
         dispatch(successLoggingIn(res.token))
       }
       else {
-        dispatch(errorLoggingIn(error))
+        console.log('There was an error with logging you in.')
         return Promise.reject(res.message);
       }
     }).catch((error) => {
+       console.log('We could not post the request.')
        dispatch(errorLoggingIn(error))
      })
 }
 
 export function registerUser(info) {
-  return dispatch => fetch('/account/signup', {method: 'POST', headers: {'Content-Type': 'applicaiton/json'}, body: JSON.stringify(info)})
+  return dispatch => fetch('/signup', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(info)})
   .then(response => response.json())
   .then((res) => {
+    console.log('received a response');
     if (res.success) {
       localStorage.setItem('token', res.token);
       dispatch(successRegistering(res.token))

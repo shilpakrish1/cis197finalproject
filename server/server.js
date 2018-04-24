@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const config = require('./config');
+const accountRoutes = require('./api/account.js')
+const foodTruckRoutes = require('./api/foodtruck.js')
+const newsFeedRoutes = require('./api/newsfeed.js')
 
 mongoose.connect('mongodb://localhost:27017/foodjs');
 mongoose.Promise = global.Promise;
@@ -21,5 +24,10 @@ app.get('*', (req, res) => {
 app.listen(process.env.PORT || 3000, () => {
   console.log('listening on ' + (process.env.PORT || 3000));
 });
+
+app.use('/', accountRoutes(app));
+app.use('/', foodTruckRoutes(app));
+app.use('/', newsFeedRoutes(app));
+
 
 module.exports = app;
