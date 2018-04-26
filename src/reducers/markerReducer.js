@@ -2,11 +2,19 @@
 const markerReducer = (state={markers: [], selectedPlace: null,
                               showingInfoWindow: false,
                               selectedName: null}, action) => {
-
-  if (action.type == 'ADD') {
+  console.log('marker action' + action.type);
+  if (action.type == 'LOADTRUCKS') {
     var obj = state.markers.slice();
-    obj.push(action.coords);
-    return Object.assign({}, state, obj)
+    console.log('marker trucks are' + action.trucks);
+    action.trucks.map((i) => {
+      var latitude = i.latitude;
+      var longitude = i.longitude;
+      var name = i.foodTruckName;
+      var image = i.foodPic;
+      var content = i.content;
+      obj.push({'latitude': latitude, 'longitude': longitude, 'name': name, 'contentString': content});
+    });
+    return Object.assign({}, state, {markers: obj})
   }
   else if (action.type == 'REMOVE') {
     var obj = state.markers.slice();

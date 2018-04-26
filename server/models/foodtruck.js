@@ -8,18 +8,22 @@ const FoodTruckSchema = new Schema({
   content: {type: String, required: true},
   menu: [{type: String}],
   openTime: {type: String},
-  closeTime: {type: String}
+  closeTime: {type: String},
+  latitude: {type: String},
+  longitude: {type: String}
 });
 
 //Creates a new food truck tweet
-FoodTruckSchema.statics.createTruck = function (foodTruckName, foodPic, content, menu, openTime, closeTime) {
+FoodTruckSchema.statics.createTruck = function (foodTruckName, foodPic, content, menu, openTime, closeTime, latitude, longitude) {
   var newTruck = new this({
     foodTruckName: foodTruckName,
     foodPic: foodPic,
     content: content,
     menu: menu,
     openTime: openTime,
-    closeTime: closeTime
+    closeTime: closeTime,
+    latitude: latitude,
+    longitude: longitude
   });
   console.log('new truck is ' + newTruck);
   return newTruck.save().then(function (savedTruck) {

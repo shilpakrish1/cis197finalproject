@@ -19,7 +19,6 @@ class FoodTruck extends Component {
 
   render() {
     let { foodTruckId, foodTruckName, foodPic, content, menu, openTime, closeTime } = this.props;
-    console.log('Food Truck props are' + JSON.stringify(this.props));
     let boxes = menu.map((i, idx) => {
       return (
       <label>
@@ -90,14 +89,6 @@ class FoodTruck extends Component {
           </label>
           <input type='submit' value='Submit' />
         </form>
-        <form>
-        <button type ='button' width='10px' height='10px' className="btn btn-info btn-sm"
-          key = {1}
-          onClick={() =>  {this.props.history.push('/createpost/' + foodTruckId)}}
-          >
-          Add your own food truck. 
-        </button>
-        </form>
       </div>
     );
   }
@@ -106,8 +97,6 @@ class FoodTruck extends Component {
 const FoodTruckWithRouter = withRouter(FoodTruck)
 
 const mapStateToProps = (state, ownProps) => {
-    console.log('ownProps are ' + JSON.stringify(ownProps));
-    console.log('props are ' + state.FoodTruckReducer[ownProps._id])
     return state.FoodTruckReducer[ownProps.id];
 }
 

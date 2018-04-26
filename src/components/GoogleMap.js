@@ -9,12 +9,13 @@ export class GoogleMapContainer extends Component {
       this.position = null
     }
     render() {
-      this.props.markers.push({lat: 37.759703, lng: -122.428093, name: 'San Francisco', contentString: 'Fresh malaysian cuisine, cheap'});
+      console.log('markers are' + JSON.stringify(this.props.markers));
+      this.props.markers.push({latitude: 37.759703, longitude: -122.428093, name: 'San Francisco', contentString: 'Fresh malaysian cuisine, cheap'});
       let markers = this.props.markers.map((i, index) => {
         return (<Marker key={index}
-                position = {{lat: i.lat, lng: i.lng}}
+                position = {{lat: i.latitude, lng: i.longitude}}
                 onClick = {() =>
-                   this.props.click({lat: i.lat, lng: i.lng}, i.name, i.contentString)}
+                   this.props.click({lat: i.latitude, lng: i.longitude}, i.name, i.contentString)}
                 />)
 			 });
       return(
@@ -27,8 +28,6 @@ export class GoogleMapContainer extends Component {
                 visible = {this.props.showingInfoWindow}>
                 <div>
                   <h4> {this.props.selectedName} </h4>
-                  <img src = 'http://www.success.com/sites/default/files/styles/article_main/public/main/articles/planhappiness.jpg?itok=KjFY7jd8'
-                              width = '150px'/>
                   <i> {this.props.contentString} </i>
                 </div>
               </InfoWindow>

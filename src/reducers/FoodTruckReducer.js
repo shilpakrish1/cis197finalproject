@@ -9,7 +9,6 @@ const FoodTruckReducer = (state={}, action) => {
         console.log('i id1 is' +  i._id);
         obj[i._id] = i;
       });
-      console.log('obj is ' + JSON.stringify(obj));
       return Object.assign({}, state, obj);
     case 'CREATETRUCKS':
       return Object.assign({}, state, action.data);

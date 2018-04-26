@@ -4248,12 +4248,13 @@ var GoogleMapContainer = exports.GoogleMapContainer = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      this.props.markers.push({ lat: 37.759703, lng: -122.428093, name: 'San Francisco', contentString: 'Fresh malaysian cuisine, cheap' });
+      console.log('markers are' + JSON.stringify(this.props.markers));
+      this.props.markers.push({ latitude: 37.759703, longitude: -122.428093, name: 'San Francisco', contentString: 'Fresh malaysian cuisine, cheap' });
       var markers = this.props.markers.map(function (i, index) {
         return _react2.default.createElement(_googleMapsReact.Marker, { key: index,
-          position: { lat: i.lat, lng: i.lng },
+          position: { lat: i.latitude, lng: i.longitude },
           onClick: function onClick() {
-            return _this2.props.click({ lat: i.lat, lng: i.lng }, i.name, i.contentString);
+            return _this2.props.click({ lat: i.latitude, lng: i.longitude }, i.name, i.contentString);
           }
         });
       });
@@ -4278,8 +4279,6 @@ var GoogleMapContainer = exports.GoogleMapContainer = function (_Component) {
               this.props.selectedName,
               ' '
             ),
-            _react2.default.createElement('img', { src: 'http://www.success.com/sites/default/files/styles/article_main/public/main/articles/planhappiness.jpg?itok=KjFY7jd8',
-              width: '150px' }),
             _react2.default.createElement(
               'i',
               null,
@@ -27134,11 +27133,19 @@ var markerReducer = function markerReducer() {
     selectedName: null };
   var action = arguments[1];
 
-
-  if (action.type == 'ADD') {
+  console.log('marker action' + action.type);
+  if (action.type == 'LOADTRUCKS') {
     var obj = state.markers.slice();
-    obj.push(action.coords);
-    return Object.assign({}, state, obj);
+    console.log('marker trucks are' + action.trucks);
+    action.trucks.map(function (i) {
+      var latitude = i.latitude;
+      var longitude = i.longitude;
+      var name = i.foodTruckName;
+      var image = i.foodPic;
+      var content = i.content;
+      obj.push({ 'latitude': latitude, 'longitude': longitude, 'name': name, 'contentString': content });
+    });
+    return Object.assign({}, state, { markers: obj });
   } else if (action.type == 'REMOVE') {
     var obj = state.markers.slice();
     obj.splice(action.idx, 1);
@@ -27182,7 +27189,6 @@ var FoodTruckReducer = function FoodTruckReducer() {
         console.log('i id1 is' + i._id);
         obj[i._id] = i;
       });
-      console.log('obj is ' + JSON.stringify(obj));
       return Object.assign({}, state, obj);
     case 'CREATETRUCKS':
       return Object.assign({}, state, action.data);
@@ -33138,8 +33144,6 @@ var FoodTruck = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
-
       var _props = this.props,
           foodTruckId = _props.foodTruckId,
           foodTruckName = _props.foodTruckName,
@@ -33149,7 +33153,6 @@ var FoodTruck = function (_Component) {
           openTime = _props.openTime,
           closeTime = _props.closeTime;
 
-      console.log('Food Truck props are' + JSON.stringify(this.props));
       var boxes = menu.map(function (i, idx) {
         return _react2.default.createElement(
           'label',
@@ -33255,20 +33258,6 @@ var FoodTruck = function (_Component) {
             _react2.default.createElement('input', { type: 'text', name: 'name' })
           ),
           _react2.default.createElement('input', { type: 'submit', value: 'Submit' })
-        ),
-        _react2.default.createElement(
-          'form',
-          null,
-          _react2.default.createElement(
-            'button',
-            { type: 'button', width: '10px', height: '10px', className: 'btn btn-info btn-sm',
-              key: 1,
-              onClick: function onClick() {
-                _this3.props.history.push('/createpost/' + foodTruckId);
-              }
-            },
-            'Add your own food truck.'
-          )
         )
       );
     }
@@ -33280,8 +33269,6 @@ var FoodTruck = function (_Component) {
 var FoodTruckWithRouter = (0, _reactRouterDom.withRouter)(FoodTruck);
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
-  console.log('ownProps are ' + JSON.stringify(ownProps));
-  console.log('props are ' + state.FoodTruckReducer[ownProps._id]);
   return state.FoodTruckReducer[ownProps.id];
 };
 
@@ -36359,7 +36346,9 @@ var EditProfile = function (_Component) {
         content: this.refs.content.value,
         menu: this.refs.menu.value,
         openTime: this.refs.opentime.value,
-        closeTime: this.refs.closetime.value
+        closeTime: this.refs.closetime.value,
+        latitude: this.refs.latitude.value,
+        longitude: this.refs.longitude.value
       };
       console.log('post data is ' + JSON.stringify(data));
       this.props.addFoodTruck(data);
@@ -36450,7 +36439,7 @@ var EditProfile = function (_Component) {
             _react2.default.createElement('input', {
               className: 'form-control',
               type: 'text',
-              ref: 'closetime'
+              ref: 'opentime'
             })
           ),
           _react2.default.createElement(
@@ -36469,7 +36458,35 @@ var EditProfile = function (_Component) {
             _react2.default.createElement('input', {
               className: 'form-control',
               type: 'text',
-              ref: 'opentime'
+              ref: 'closetime'
+            })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              null,
+              'Latitude:'
+            ),
+            _react2.default.createElement('input', {
+              className: 'form-control',
+              type: 'text',
+              ref: 'latitude'
+            })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              null,
+              'Longitude:'
+            ),
+            _react2.default.createElement('input', {
+              className: 'form-control',
+              type: 'text',
+              ref: 'longitude'
             })
           ),
           _react2.default.createElement(

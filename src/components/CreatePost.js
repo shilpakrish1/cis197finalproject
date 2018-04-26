@@ -18,7 +18,9 @@ class EditProfile extends Component {
       content: this.refs.content.value,
       menu: this.refs.menu.value,
       openTime: this.refs.opentime.value,
-      closeTime: this.refs.closetime.value
+      closeTime: this.refs.closetime.value,
+      latitude: this.refs.latitude.value,
+      longitude: this.refs.longitude.value
     };
     console.log('post data is ' + JSON.stringify(data));
     this.props.addFoodTruck(data);
@@ -77,7 +79,7 @@ class EditProfile extends Component {
             <input
               className="form-control"
               type="text"
-              ref="closetime"
+              ref="opentime"
             />
           </div>
           <div className="form-group">
@@ -88,7 +90,27 @@ class EditProfile extends Component {
             <input
               className="form-control"
               type="text"
-              ref="opentime"
+              ref="closetime"
+            />
+          </div>
+          <div className="form-group">
+            <label>
+              Latitude:
+            </label>
+            <input
+              className="form-control"
+              type="text"
+              ref="latitude"
+            />
+          </div>
+          <div className="form-group">
+            <label>
+              Longitude:
+            </label>
+            <input
+              className="form-control"
+              type="text"
+              ref="longitude"
             />
           </div>
           <div className="form-group">

@@ -26,7 +26,9 @@ router.post('/createpost', function (req, res) {
   var menu = req.body.menu;
   var openTime = req.body.openTime;
   var closeTime = req.body.closeTime;
-  FoodTruck.createTruck(name, foodPic, content, menu, openTime, closeTime).then((truck) => {
+  var latitude = req.body.latitude;
+  var longitude = req.body.longitude;
+  FoodTruck.createTruck(name, foodPic, content, menu, openTime, closeTime, latitude, longitude).then((truck) => {
     res.send({res: 'success', data: truck});
   }).catch((err) => {
       res.send({res: 'failure', data: err});
