@@ -95,7 +95,7 @@ class FoodTruck extends Component {
           key = {1}
           onClick={() =>  {this.props.history.push('/createpost/' + foodTruckId)}}
           >
-          Edit Post
+          Add your own food truck. 
         </button>
         </form>
       </div>

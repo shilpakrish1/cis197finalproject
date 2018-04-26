@@ -33267,7 +33267,7 @@ var FoodTruck = function (_Component) {
                 _this3.props.history.push('/createpost/' + foodTruckId);
               }
             },
-            'Edit Post'
+            'Add your own food truck.'
           )
         )
       );
