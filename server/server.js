@@ -8,7 +8,7 @@ const accountRoutes = require('./api/account.js')
 const foodTruckRoutes = require('./api/foodtruck.js')
 const newsFeedRoutes = require('./api/newsfeed.js')
 
-mongoose.connect('mongodb://localhost:27017/foodjs');
+mongoose.connect(process.env.MONGODB_URI || config.database);
 mongoose.Promise = global.Promise;
 const app = express();
 
