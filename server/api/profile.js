@@ -2,10 +2,10 @@ const router = require('express').Router();
 const isAuthenticated = require('../middlewares/isAuthenticated');
 
 module.exports = function (app) {
-  app.use(isAuthenticated(app));
+//  app.use(isAuthenticated(app));
 
 //Posts to create a tweet
-router.post('/createpost', function (req, res) {
+router.get('/profile', function (req, res) {
   console.log('loading the truck');
   name = req.body.name;
   foodPic = req.body.foodpic;

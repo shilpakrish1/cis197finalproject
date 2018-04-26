@@ -4385,7 +4385,7 @@ function addFoodTruck(data) {
 
 function loadTrucks() {
   return function (dispatch) {
-    fetch('/api/feed').then(function (response) {
+    fetch('/api/profile').then(function (response) {
       console.log(response);
       if (response.status !== 200) {
         return Promise.reject(response);
@@ -4395,13 +4395,11 @@ function loadTrucks() {
     }).then(function (res) {
       return res.json();
     }).then(function (resp) {
-      console.log('resp is ' + resp);
       dispatch({
         type: 'LOADTRUCKS',
         trucks: resp.data
       });
     }).catch(function (error) {
-      console.log('error is ' + error);
       dispatch({
         type: 'LOADTRUCKS_FAILED',
         message: 'Failed to load the trucks. Please try again later.',

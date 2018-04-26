@@ -26,8 +26,9 @@ export function addFoodTruck(data) {
 
 export function loadTrucks() {
   return(dispatch) => {
-    fetch('api/feed')
+    fetch('/api/profile')
     .then((response) => {
+      console.log(response);
       if (response.status !== 200) {
         return Promise.reject(response);
       } else {
