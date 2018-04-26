@@ -3,7 +3,7 @@ const FoodTruckListReducer = (state = {ids: [],}, action) => {
   switch (action.type) {
   case 'LOADTRUCKS':
     return {
-      ids: action.trucks.map(t => t.id),
+      ids: action.trucks.map(t => t._id),
     };
   default:
     return state;

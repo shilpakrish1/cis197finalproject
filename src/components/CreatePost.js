@@ -20,6 +20,7 @@ class EditProfile extends Component {
       openTime: this.refs.opentime.value,
       closeTime: this.refs.closetime.value
     };
+    console.log('post data is ' + JSON.stringify(data));
     this.props.addFoodTruck(data);
   }
 

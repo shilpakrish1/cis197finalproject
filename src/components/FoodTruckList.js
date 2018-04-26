@@ -26,12 +26,12 @@ class FoodTruckList extends Component {
   }
 
   render() {
-    console.log(this.props);
-    this.props.ids.push(1);
-    this.props.ids.push(2);
-    let trucks = this.props.ids.map((i, id) => {
-      return <FoodTruck key={id} id={i}/>
+    console.log('ids are ' + this.props.ids);
+    let trucks = this.props.ids.map((i) => {
+      console.log(i);
+      return <FoodTruck key={i} id = {i}/>
     });
+    console.log('my trucks are ' + trucks);
     return (
       <div>
         { trucks }

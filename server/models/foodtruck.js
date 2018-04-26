@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 //Creates a new FoodTruckSchema
 const FoodTruckSchema = new Schema({
-  foodTruckId: {type: Schema.ObjectId, required: true},
   foodTruckName: {type: String, required: true},
   foodPic: {type: String},
   content: {type: String, required: true},
@@ -13,9 +12,8 @@ const FoodTruckSchema = new Schema({
 });
 
 //Creates a new food truck tweet
-FoodTruckSchema.statics.createTruck = function (foodTruckId, foodTruckName, foodPic, content, menu, openTime, closeTime) {
+FoodTruckSchema.statics.createTruck = function (foodTruckName, foodPic, content, menu, openTime, closeTime) {
   var newTruck = new this({
-    foodTruckId: foodTruckId,
     foodTruckName: foodTruckName,
     foodPic: foodPic,
     content: content,
@@ -23,6 +21,7 @@ FoodTruckSchema.statics.createTruck = function (foodTruckId, foodTruckName, food
     openTime: openTime,
     closeTime: closeTime
   });
+  console.log('new truck is ' + newTruck);
   return newTruck.save().then(function (savedTruck) {
     return savedTruck;
   });

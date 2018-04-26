@@ -4355,21 +4355,29 @@ module.exports = memoizeStringOnly;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.FAVUNFAV_REJ = exports.FAVUNFAV_FUL = exports.GETPROFILE_REJ = exports.GETPROFILE_FUL = exports.UPDATEPROFILE_REJ = exports.UPDATEPROFILE_FUL = undefined;
 exports.addFoodTruck = addFoodTruck;
 exports.loadTrucks = loadTrucks;
+
+var _authRequest = __webpack_require__(150);
+
+var _authRequest2 = _interopRequireDefault(_authRequest);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var UPDATEPROFILE_FUL = exports.UPDATEPROFILE_FUL = 'UPDATEPROFILE_FUL';
 var UPDATEPROFILE_REJ = exports.UPDATEPROFILE_REJ = 'UPDATEPROFILE_REJ';
 var GETPROFILE_FUL = exports.GETPROFILE_FUL = 'GETPROFILE_FUL';
 var GETPROFILE_REJ = exports.GETPROFILE_REJ = 'GETPROFILE_REJ';
 var FAVUNFAV_FUL = exports.FAVUNFAV_FUL = 'FAVUNFAV_FUL';
 var FAVUNFAV_REJ = exports.FAVUNFAV_REJ = 'FAVUNFAV_REJ';
-
 function addFoodTruck(data) {
   return function (dispatch) {
-    fetch('/createpost', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: data }).then(function (res) {
+    fetch('/api/createpost', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(function (res) {
       return res.json();
     }).then(function (resp) {
       var data = resp.data;
+      console.log('data is ' + JSON.stringify(data));
       dispatch({
         type: UPDATEPROFILE_FUL,
         message: 'You have successfully created or edited a post.'
@@ -4385,10 +4393,11 @@ function addFoodTruck(data) {
 
 function loadTrucks() {
   return function (dispatch) {
-    fetch('/home', { method: 'GET', headers: { 'Content-Type': 'application/json' } }).then(function (res) {
+    console.log('here1');
+    fetch('/api/home').then(function (res) {
       return res.json();
     }).then(function (resp) {
-      console.log('resp is ' + resp);
+      console.log('resp is ' + resp.data);
       dispatch({
         type: 'LOADTRUCKS',
         trucks: resp.data
@@ -27168,27 +27177,17 @@ var FoodTruckReducer = function FoodTruckReducer() {
     case 'LOADTRUCKS':
       var obj = _extends({}, state);
       action.trucks.map(function (i) {
-        obj[i.id] = i;
+        console.log('truck is' + JSON.stringify(i));
+        console.log('i id is' + i.id);
+        console.log('i id1 is' + i._id);
+        obj[i._id] = i;
       });
+      console.log('obj is ' + JSON.stringify(obj));
       return Object.assign({}, state, obj);
     case 'CREATETRUCKS':
       return Object.assign({}, state, action.data);
     default:
       var obj = _extends({}, state);
-      obj[1] = { foodTruckId: 1,
-        foodTruckName: 'Magic Carpet',
-        foodPic: 'https://cbsphilly.files.wordpress.com/2011/03/magiccarpet.jpg',
-        content: 'yum',
-        menu: ['Tofu Meatballs', 'Curry Tofu'],
-        openTime: '9 AM',
-        closeTime: '3 PM' };
-      obj[2] = { foodTruckId: 1,
-        foodTruckName: 'Magic Carpet',
-        foodPic: 'https://cbsphilly.files.wordpress.com/2011/03/magiccarpet.jpg',
-        content: 'yum',
-        menu: ['Tofu Meatballs', 'Curry Tofu'],
-        openTime: '9 AM',
-        closeTime: '8 PM' };
       return Object.assign({}, state, obj);
   }
 };
@@ -27214,7 +27213,7 @@ var FoodTruckListReducer = function FoodTruckListReducer() {
     case 'LOADTRUCKS':
       return {
         ids: action.trucks.map(function (t) {
-          return t.id;
+          return t._id;
         })
       };
     default:
@@ -33059,12 +33058,12 @@ var FoodTruckList = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      console.log(this.props);
-      this.props.ids.push(1);
-      this.props.ids.push(2);
-      var trucks = this.props.ids.map(function (i, id) {
-        return _react2.default.createElement(_FoodTruck2.default, { key: id, id: i });
+      console.log('ids are ' + this.props.ids);
+      var trucks = this.props.ids.map(function (i) {
+        console.log(i);
+        return _react2.default.createElement(_FoodTruck2.default, { key: i, id: i });
       });
+      console.log('my trucks are ' + trucks);
       return _react2.default.createElement(
         'div',
         null,
@@ -33150,6 +33149,7 @@ var FoodTruck = function (_Component) {
           openTime = _props.openTime,
           closeTime = _props.closeTime;
 
+      console.log('Food Truck props are' + JSON.stringify(this.props));
       var boxes = menu.map(function (i, idx) {
         return _react2.default.createElement(
           'label',
@@ -33280,6 +33280,8 @@ var FoodTruck = function (_Component) {
 var FoodTruckWithRouter = (0, _reactRouterDom.withRouter)(FoodTruck);
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
+  console.log('ownProps are ' + JSON.stringify(ownProps));
+  console.log('props are ' + state.FoodTruckReducer[ownProps._id]);
   return state.FoodTruckReducer[ownProps.id];
 };
 
@@ -36359,6 +36361,7 @@ var EditProfile = function (_Component) {
         openTime: this.refs.opentime.value,
         closeTime: this.refs.closetime.value
       };
+      console.log('post data is ' + JSON.stringify(data));
       this.props.addFoodTruck(data);
     }
   }, {
@@ -36594,6 +36597,51 @@ function requiresAuth(Component) {
   // changes the page
 
   return (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Authentication));
+}
+
+/***/ }),
+/* 150 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = authenticatedRequest;
+function authenticatedRequest(type, url, body) {
+  // what's going on
+  // set the config  for our fetch requests to have a method equal to the type
+  // headers with a single property 'auth-token' equal to the token we have stored
+  // in localStorage
+  //
+  // if type === 'POST' then add another header 'Content-Type' equal to 'application/json'
+  // additionall set the body of the config object equal to the JSON.stringified version of
+  // the body passed in
+  //
+  // then return a promise of the fetch function called with url and config (note that
+  // fetch is promisified. .then when a response comes through, if the response status
+  // is not 200 then reject the promise (go to the next  .catch) else resolve it (continue
+  // to next then in chain)
+  var config = {
+    method: type,
+    headers: {
+      'auth-token': localStorage.getItem('token')
+    } // this line is important, if this content-type is not set it wont work
+  };
+  if (type === 'POST') {
+    config.headers['Content-Type'] = 'application/json';
+    config.body = JSON.stringify(body ? body : {});
+  }
+
+  return fetch(url, config).then(function (response) {
+    if (response.status !== 200) {
+      return Promise.reject(response);
+    } else {
+      return Promise.resolve(response);
+    }
+  });
 }
 
 /***/ })

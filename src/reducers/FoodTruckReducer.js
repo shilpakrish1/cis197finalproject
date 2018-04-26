@@ -4,27 +4,17 @@ const FoodTruckReducer = (state={}, action) => {
     case 'LOADTRUCKS':
       var obj = {...state};
       action.trucks.map((i) => {
-        obj[i.id] = i;
+        console.log('truck is' + JSON.stringify(i));
+        console.log('i id is' +  i.id);
+        console.log('i id1 is' +  i._id);
+        obj[i._id] = i;
       });
+      console.log('obj is ' + JSON.stringify(obj));
       return Object.assign({}, state, obj);
     case 'CREATETRUCKS':
       return Object.assign({}, state, action.data);
     default:
       var obj = {...state};
-      obj[1] = {foodTruckId: 1,
-               foodTruckName: 'Magic Carpet',
-               foodPic: 'https://cbsphilly.files.wordpress.com/2011/03/magiccarpet.jpg',
-               content: 'yum',
-               menu: ['Tofu Meatballs', 'Curry Tofu'],
-               openTime: '9 AM',
-               closeTime: '3 PM',}
-      obj[2] = {foodTruckId: 1,
-                foodTruckName: 'Magic Carpet',
-                foodPic: 'https://cbsphilly.files.wordpress.com/2011/03/magiccarpet.jpg',
-                content: 'yum',
-                menu: ['Tofu Meatballs', 'Curry Tofu'],
-                openTime: '9 AM',
-                closeTime: '8 PM'}
       return Object.assign({}, state, obj);
    }
 }

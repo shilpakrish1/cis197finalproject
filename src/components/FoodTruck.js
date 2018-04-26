@@ -19,6 +19,7 @@ class FoodTruck extends Component {
 
   render() {
     let { foodTruckId, foodTruckName, foodPic, content, menu, openTime, closeTime } = this.props;
+    console.log('Food Truck props are' + JSON.stringify(this.props));
     let boxes = menu.map((i, idx) => {
       return (
       <label>
@@ -105,6 +106,8 @@ class FoodTruck extends Component {
 const FoodTruckWithRouter = withRouter(FoodTruck)
 
 const mapStateToProps = (state, ownProps) => {
+    console.log('ownProps are ' + JSON.stringify(ownProps));
+    console.log('props are ' + state.FoodTruckReducer[ownProps._id])
     return state.FoodTruckReducer[ownProps.id];
 }
 

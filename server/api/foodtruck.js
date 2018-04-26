@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const isAuthenticated = require('../middlewares/isAuthenticated');
+const FoodTruck = require('../models/FoodTruck.js');
+
 
 module.exports = function (app) {
   app.use(isAuthenticated(app));
