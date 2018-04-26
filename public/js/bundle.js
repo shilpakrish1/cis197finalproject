@@ -4358,7 +4358,7 @@ exports.FAVUNFAV_REJ = exports.FAVUNFAV_FUL = exports.GETPROFILE_REJ = exports.G
 exports.addFoodTruck = addFoodTruck;
 exports.loadTrucks = loadTrucks;
 
-var _authRequest = __webpack_require__(150);
+var _authRequest = __webpack_require__(148);
 
 var _authRequest2 = _interopRequireDefault(_authRequest);
 
@@ -27309,11 +27309,11 @@ var _Feed = __webpack_require__(142);
 
 var _Feed2 = _interopRequireDefault(_Feed);
 
-var _CreatePost = __webpack_require__(148);
+var _CreatePost = __webpack_require__(149);
 
 var _CreatePost2 = _interopRequireDefault(_CreatePost);
 
-var _Authentication = __webpack_require__(149);
+var _Authentication = __webpack_require__(150);
 
 var _Authentication2 = _interopRequireDefault(_Authentication);
 
@@ -36303,6 +36303,51 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = authenticatedRequest;
+function authenticatedRequest(type, url, body) {
+  // what's going on
+  // set the config  for our fetch requests to have a method equal to the type
+  // headers with a single property 'auth-token' equal to the token we have stored
+  // in localStorage
+  //
+  // if type === 'POST' then add another header 'Content-Type' equal to 'application/json'
+  // additionall set the body of the config object equal to the JSON.stringified version of
+  // the body passed in
+  //
+  // then return a promise of the fetch function called with url and config (note that
+  // fetch is promisified. .then when a response comes through, if the response status
+  // is not 200 then reject the promise (go to the next  .catch) else resolve it (continue
+  // to next then in chain)
+  var config = {
+    method: type,
+    headers: {
+      'auth-token': localStorage.getItem('token')
+    } // this line is important, if this content-type is not set it wont work
+  };
+  if (type === 'POST') {
+    config.headers['Content-Type'] = 'application/json';
+    config.body = JSON.stringify(body ? body : {});
+  }
+
+  return fetch(url, config).then(function (response) {
+    if (response.status !== 200) {
+      return Promise.reject(response);
+    } else {
+      return Promise.resolve(response);
+    }
+  });
+}
+
+/***/ }),
+/* 149 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -36517,7 +36562,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(EditProfile);
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36614,51 +36659,6 @@ function requiresAuth(Component) {
   // changes the page
 
   return (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Authentication));
-}
-
-/***/ }),
-/* 150 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = authenticatedRequest;
-function authenticatedRequest(type, url, body) {
-  // what's going on
-  // set the config  for our fetch requests to have a method equal to the type
-  // headers with a single property 'auth-token' equal to the token we have stored
-  // in localStorage
-  //
-  // if type === 'POST' then add another header 'Content-Type' equal to 'application/json'
-  // additionall set the body of the config object equal to the JSON.stringified version of
-  // the body passed in
-  //
-  // then return a promise of the fetch function called with url and config (note that
-  // fetch is promisified. .then when a response comes through, if the response status
-  // is not 200 then reject the promise (go to the next  .catch) else resolve it (continue
-  // to next then in chain)
-  var config = {
-    method: type,
-    headers: {
-      'auth-token': localStorage.getItem('token')
-    } // this line is important, if this content-type is not set it wont work
-  };
-  if (type === 'POST') {
-    config.headers['Content-Type'] = 'application/json';
-    config.body = JSON.stringify(body ? body : {});
-  }
-
-  return fetch(url, config).then(function (response) {
-    if (response.status !== 200) {
-      return Promise.reject(response);
-    } else {
-      return Promise.resolve(response);
-    }
-  });
 }
 
 /***/ })

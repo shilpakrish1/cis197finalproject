@@ -1,8 +1,8 @@
 {
-  "name": "twitter-for-birds",
+  "name": "food-truck-finder",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Abhi <suriabhinav1997@gmail.com>",
+  "author": "Shilpa Krish",
   "license": "MIT",
   "scripts": {
     "start": "node server/server.js",
