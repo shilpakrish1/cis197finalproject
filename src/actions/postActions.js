@@ -26,12 +26,16 @@ export function addFoodTruck(data) {
 
 export function loadTrucks() {
   return(dispatch) => {
-    fetch('/home', {method: 'GET', headers: {'Content-Type': 'application/json'}})
-    .then((res) =>  {
-      return res.json();
+    fetch('api/feed')
+    .then((response) => {
+      if (response.status !== 200) {
+        return Promise.reject(response);
+      } else {
+        return Promise.resolve(response);
+      }
     })
+    .then((res) => res.json())
     .then((resp) => {
-      console.log('resp is ' + resp);
       dispatch({
         type: 'LOADTRUCKS',
         trucks: resp.data,

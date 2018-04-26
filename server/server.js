@@ -17,6 +17,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
+app.use('api/account', accountRoutes(app));
+app.use('api/createpost', foodTruckRoutes(app));
+app.use('api/feed', newsFeedRoutes(app));
+
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
@@ -25,9 +30,6 @@ app.listen(process.env.PORT || 3000, () => {
   console.log('listening on ' + (process.env.PORT || 3000));
 });
 
-app.use('/', accountRoutes(app));
-app.use('/', foodTruckRoutes(app));
-app.use('/', newsFeedRoutes(app));
 
 
 module.exports = app;

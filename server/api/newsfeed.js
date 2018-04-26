@@ -1,19 +1,22 @@
 const router = require('express').Router();
-const FoodTruck = require('../models/FoodTruck.js');
+const isAuthenticated = require('../middlewares/isAuthenticated');
 
-//Gets all the food trucks
-module.exports = function (app) {
-  router.get('/home', function (req, res) {
-    console.log('trying');
-    var posts = FoodTruck.getAllTrucks().then((trucks) => {
-      var info = trucks.map((truck) => {
-        return truck;
-      });
-      return Promise.all(info).then((info) => {
-      res.send({res: 'success'});
-    }).catch((err) => {
+
+//Posts to create a tweet
+module.exports = (app) => {
+  app.use(isAuthenticated(app));
+
+  router.get('/feed', function (req, res) {
+    name = req.body.name;
+    foodPic = req.body.foodpic;
+    content = req.body.content;
+    menu = req.body.menu;
+    openTime = req.body.opentime;
+    closeTime = req.body.closetime;
+    FoodTruck.createTruck(req.params).then((truck) => {
+    res.send({res: 'success', data: truck});
+  }).catch((err) => {
       res.send({res: 'failure', data: err});
     });
   });
-  return router;
 }

@@ -27,7 +27,7 @@ class App extends Component {
               <Route path ='/signin' component={SignIn}/>
               <Route path ='/logout' component={Logout}/>
               <Route path = '/createpost/:id?' component = {Authentication(CreatePost)} />
-              <Route component={NewsFeed}/>
+              <Route path ='/home' component={NewsFeed}/>
             </Switch>
           </div>
         </div>

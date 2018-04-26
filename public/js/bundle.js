@@ -4385,7 +4385,14 @@ function addFoodTruck(data) {
 
 function loadTrucks() {
   return function (dispatch) {
-    fetch('/home', { method: 'GET', headers: { 'Content-Type': 'application/json' } }).then(function (res) {
+    fetch('/api/feed').then(function (response) {
+      console.log(response);
+      if (response.status !== 200) {
+        return Promise.reject(response);
+      } else {
+        return Promise.resolve(response);
+      }
+    }).then(function (res) {
       return res.json();
     }).then(function (resp) {
       console.log('resp is ' + resp);
@@ -4394,6 +4401,7 @@ function loadTrucks() {
         trucks: resp.data
       });
     }).catch(function (error) {
+      console.log('error is ' + error);
       dispatch({
         type: 'LOADTRUCKS_FAILED',
         message: 'Failed to load the trucks. Please try again later.',
@@ -27350,7 +27358,7 @@ var App = function (_Component) {
               _react2.default.createElement(_reactRouterDom.Route, { path: '/signin', component: _SignIn2.default }),
               _react2.default.createElement(_reactRouterDom.Route, { path: '/logout', component: _Logout2.default }),
               _react2.default.createElement(_reactRouterDom.Route, { path: '/createpost/:id?', component: (0, _Authentication2.default)(_CreatePost2.default) }),
-              _react2.default.createElement(_reactRouterDom.Route, { component: _Feed2.default })
+              _react2.default.createElement(_reactRouterDom.Route, { path: '/home', component: _Feed2.default })
             )
           )
         )

@@ -2,16 +2,14 @@ const express = require('express');
 const isAuthenticated = require('../middlewares/isAuthenticated');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+const router = require('express').Router();
+
 
 module.exports = (app) => {
   const accountRoutes = express.Router();
 
   //Signs up a user
   accountRoutes.post('/signup', (req, res) => {
-    console.log('username is ' + req.body.username);
-    console.log('name is ' + req.body.name);
-    console.log('password is ' + req.body.password);
-    console.log('email is ' + req.body.email);
     User.addUser(req.body.username, req.body.name, req.body.password, req.body.email).then((user) => {
       var tkn = jwt.sign({id: user._id}, app.get('superSecret'));
       res.send({success: true, token: tkn});
